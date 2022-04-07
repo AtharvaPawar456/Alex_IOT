@@ -12,7 +12,10 @@ class Auth {
       backgroundColor: Colors.black,
       content: Text(
         content,
-        style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+        style: const TextStyle(
+          color: Colors.deepOrange,
+          letterSpacing: 0.5,
+        ),
       ),
     );
   }
