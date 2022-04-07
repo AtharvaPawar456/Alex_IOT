@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:alex_iot/services/channel_control.dart';
 import 'package:flutter/material.dart';
 
@@ -57,10 +59,10 @@ class _ChannelControlState extends State<ChannelControl> {
                       });
                       if (switchStates[index]) {
                         channels[index] += 50;
-                        print(channels[index]);
+                        // print(channels[index]);
                       } else {
                         channels[index] -= 50;
-                        print(channels[index]);
+                        // print(channels[index]);
                       }
 
                       updateChannel(

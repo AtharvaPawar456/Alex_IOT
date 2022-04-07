@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "744405290885",
+    "project_id": "alex-iot-e4cd1",
+    "storage_bucket": "alex-iot-e4cd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744405290885:android:5934235bb91448bfa87eec",
+        "android_client_info": {
+          "package_name": "com.example.alex_iot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744405290885-m82u3i12m5injik0o18im8aolfauq0qq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alex_iot",
+            "certificate_hash": "f697fe1269d33b2bbff08160a5bb0f76f7ab218d"
+          }
+        },
+        {
+          "client_id": "744405290885-s2lek7klkj8j6qmmm8rup9tn57nbuf7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGO4lDBqFW53E9gZP6i7q_sEZfQQIY3eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744405290885-s2lek7klkj8j6qmmm8rup9tn57nbuf7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
