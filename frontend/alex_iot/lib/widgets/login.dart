@@ -37,8 +37,9 @@ class LoginPage extends StatelessWidget {
             future: Auth.initializeFirebase(context: context),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                // print(snapshot.error);
-                return const Text('Error initializing Firebase');
+                print(snapshot.error);
+                // return const Text('Error initializing Firebase');
+                return Text(snapshot.error.toString());
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return const GoogleSignInButton();
               }

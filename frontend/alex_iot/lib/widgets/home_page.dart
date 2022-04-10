@@ -1,6 +1,7 @@
 import 'package:alex_iot/firebase/auth.dart';
 import 'package:alex_iot/models/thing_speak.dart';
 import 'package:alex_iot/services/thing_speak.dart';
+import 'package:alex_iot/widgets/api_dialog.dart';
 import 'package:alex_iot/widgets/channel_control.dart';
 import 'package:alex_iot/widgets/login.dart';
 import 'package:alex_iot/widgets/temp_hum_widget.dart';
@@ -36,6 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.account_circle),
             ),
           IconButton(
+            onPressed: () {
+              showInformationDialog(context, widget.user);
+            },
+            icon: const Icon(Icons.link),
+          ),
+          IconButton(
               onPressed: () {
                 Auth.signOut(context: context);
                 Navigator.of(context).pushReplacement(
@@ -54,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             children: <Widget>[
               FutureBuilder<ThingSpeak>(
-                  future: getThingSpeakData(),
+                  future: getThingSpeakData(widget.user!.uid),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final temperature = snapshot.data?.feeds[0].field2;
@@ -70,12 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             const SizedBox(height: 50),
                             ChannelControl(
-                                temperature: temperature, humidity: humidity)
+                                user: widget.user,
+                                temperature: temperature,
+                                humidity: humidity)
                           ],
                         ),
                       );
                     } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
+                      // return Text("${snapshot.error}");
+                      return const Text(
+                          "Please check if you have entered a valid API key");
                     }
                     return const Center(child: CircularProgressIndicator());
                   })

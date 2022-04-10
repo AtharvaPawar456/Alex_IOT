@@ -1,14 +1,16 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:alex_iot/services/channel_control.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChannelControl extends StatefulWidget {
-  const ChannelControl({Key? key, this.temperature, this.humidity})
+  const ChannelControl({Key? key, this.temperature, this.humidity, this.user})
       : super(key: key);
 
   final humidity;
   final temperature;
+  final user;
 
   @override
   State<ChannelControl> createState() => _ChannelControlState();
@@ -54,19 +56,32 @@ class _ChannelControlState extends State<ChannelControl> {
                   Switch(
                     value: switchStates[index],
                     onChanged: (state) {
-                      setState(() {
-                        switchStates[index] = state;
-                      });
+                      final temp;
+
                       if (switchStates[index]) {
-                        channels[index] += 50;
-                        // print(channels[index]);
+                        temp = channels[index] - 50;
                       } else {
-                        channels[index] -= 50;
-                        // print(channels[index]);
+                        temp = channels[index] + 50;
                       }
 
                       updateChannel(
-                          channels[index], widget.temperature, widget.humidity);
+                        widget.user.uid,
+                        temp,
+                        widget.temperature,
+                        widget.humidity,
+                      ).then((value) {
+                        setState(() {
+                          if (value != "0") {
+                            channels[index] = temp;
+                            switchStates[index] = state;
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Updating Failed ..."),
+                            ));
+                          }
+                        });
+                      });
                     },
                   ),
                   Text("${channels[index]}"),

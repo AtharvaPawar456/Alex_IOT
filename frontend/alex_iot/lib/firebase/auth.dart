@@ -31,7 +31,7 @@ class Auth {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const MyHomePage(),
+          builder: (context) => MyHomePage(user: user),
         ),
       );
     }
