@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:alex_iot/services/channel_control.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChannelControl extends StatefulWidget {
@@ -23,7 +22,7 @@ class _ChannelControlState extends State<ChannelControl> {
     "Channel 3",
     "Channel 4"
   ];
-  final List<int> channels = [400, 500, 600, 700];
+  final List<int> channels = [450, 550, 650, 750];
   final List<bool> switchStates = [false, false, false, false];
 
   @override
@@ -56,25 +55,30 @@ class _ChannelControlState extends State<ChannelControl> {
                   Switch(
                     value: switchStates[index],
                     onChanged: (state) {
-                      final temp;
+                      var temp, prev;
 
                       if (switchStates[index]) {
-                        temp = channels[index] - 50;
-                      } else {
                         temp = channels[index] + 50;
+                      } else {
+                        temp = channels[index] - 50;
                       }
+
+                      setState(() {
+                        prev = channels[index];
+                        channels[index] = temp;
+                        switchStates[index] = state;
+                      });
 
                       updateChannel(
                         widget.user.uid,
-                        temp,
+                        channels[index],
                         widget.temperature,
                         widget.humidity,
                       ).then((value) {
                         setState(() {
-                          if (value != "0") {
-                            channels[index] = temp;
-                            switchStates[index] = state;
-                          } else {
+                          if (value == "0") {
+                            channels[index] = prev;
+                            switchStates[index] = !state;
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text("Updating Failed ..."),
