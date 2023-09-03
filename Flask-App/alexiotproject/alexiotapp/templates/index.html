@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Temperature and Humidity</title>
+</head>
+<body>
+    <!-- <h1 class="text-xl font-bold text-center">Alex IoT</h1> -->
+    <nav class="p-4 flex items-center justify-between mx-10">
+        <div class="flex items-center">
+            <div class="text-blue-700 text-4xl font-bold">Alex IoT</div>
+        </div>
+        <div class="flex items-center space-x-10">
+            <a href="#" class="text-2xl text-blue-700 font-bold font-mono hover:underline">Home</a>
+            <a href="#" class="text-2xl text-blue-700 font-bold font-mono hover:underline">Docs</a>
+            <a href="#" class="text-2xl text-blue-700 font-bold font-mono hover:underline">About</a>
+        </div>
+    </nav>
+    <!-- Control Buttons -->
+    <section class="mx-10 my-6">
+        <div class="text-center text-2xl text-black mb-4 font-bold">Smart Control</div>
+
+        <div class="toggle-buttons">
+            <div class="grid grid-cols-4 gap-4 ">
+                
+                <!-- control 1 -->
+                <div class="border shadow-lg p-4">
+                    <form action="{% url 'control' %}" method="post">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-2 gap-4 flex items-center">
+                            <p class="text-xl font-bold">Channel 1: </p>
+                            <button type="submit" name="led" value="LED1" 
+                                class="toggle-button border p-4 rounded text-white {% if led_states.LED1 %}active bg-[#166534]  {% else %}bg-[#991b1b] {% endif %}"
+                                onclick="startLoading(this)">
+                                {% if led_states.LED1 %} ON {% else %} OFF {% endif %}</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- control 2 -->
+                <div class="border shadow-lg p-4">
+                    <form action="{% url 'control' %}" method="post">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-2 gap-4 flex items-center">
+                            <p class="text-xl font-bold">Channel 2: </p>
+                            <button type="submit" name="led" value="LED2" 
+                                class="toggle-button border p-4 rounded text-white {% if led_states.LED2 %}active bg-[#166534]  {% else %}bg-[#991b1b] {% endif %}"
+                                onclick="startLoading(this)">
+                                {% if led_states.LED2 %} ON {% else %} OFF {% endif %}</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- control 3 -->
+                <div class="border shadow-lg p-4">
+                    <form action="{% url 'control' %}" method="post">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-2 gap-4 flex items-center">
+                            <p class="text-xl font-bold">Channel 3: </p>
+                            <button type="submit" name="led" value="LED3" 
+                                class="toggle-button border p-4 rounded text-white {% if led_states.LED3 %}active bg-[#166534]  {% else %}bg-[#991b1b] {% endif %}"
+                                onclick="startLoading(this)">
+                                {% if led_states.LED3 %} ON {% else %} OFF {% endif %}</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- control 4 -->
+                <div class="border shadow-lg p-4">
+                    <form action="{% url 'control' %}" method="post">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-2 gap-4 flex items-center">
+                            <p class="text-xl font-bold">Channel 4: </p>
+                            <button type="submit" name="led" value="LED4" 
+                                class="toggle-button border p-4 rounded text-white {% if led_states.LED4 %}active bg-[#166534]  {% else %}bg-[#991b1b] {% endif %}"
+                                onclick="startLoading(this)">
+                                {% if led_states.LED4 %} ON {% else %} OFF {% endif %}</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Temp and Humi -->
+    <section class="mx-10 pt-4 font-mono">
+        <div class="text-center text-2xl text-black my-10 font-bold">Smart View</div>
+    
+        <div class="grid grid-cols-2 gap-4">
+            <button id="temperatureBtn"
+                    class="border text-center py-16 font-mono text-2xl rounded shadow">
+                <i class="fa-solid fa-temperature-low mx-2"></i>Temperature <br> {{ temperature }} °C
+            </button>
+            <div id="humidityDiv"
+                 class="border text-center py-16 font-mono text-2xl rounded shadow">
+                <i class="fa-solid fa-droplet mx-2"></i>Humidity <br> {{ humidity }} %
+            </div>
+        </div>
+        <div class="text-center text-xl text-black my-6 mb-20">Last updated at {{ created_at }}</div>
+    </section>
+
+
+    <!-- js -->
+    <script>
+        function startLoading(button) {
+            button.innerHTML = 'Loading...';
+            setTimeout(() => {
+                button.innerHTML = button.classList.contains('active') ? 'OFF' : 'ON';
+            }, 60000);
+            //50000 = 50 sec
+            //60000 = 60 seconds = 1 minute
+
+        }
+
+        function fetchDataAndUpdate() {
+            fetch('/control')  // Replace with the correct URL for fetching data
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperatureBtn').innerHTML =
+                        `<i class="fa-solid fa-temperature-low mx-2"></i>Temperature <br> ${temperature} °C`;
+                    document.getElementById('humidityDiv').innerHTML =
+                        `<i class="fa-solid fa-droplet mx-2"></i>Humidity <br> ${humidity} %`;
+                    document.querySelector('.my-6').textContent = `Last updated at ${created_at}`;
+                });
+        }
+    
+        setTimeout(() => {
+            fetchDataAndUpdate();
+            setInterval(fetchDataAndUpdate, 120000);  // 2 minutes = 120000 milliseconds
+        }, 60000);  // 120000 = Initial 2-minute delay
+
+    </script>
+</body>
+</html>

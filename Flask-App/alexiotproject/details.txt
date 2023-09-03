@@ -1,0 +1,4 @@
+django-admin startproject alexiotproject
+python manage.py startapp alexiotapp
+
+python manage.py runserver
