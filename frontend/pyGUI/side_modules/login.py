@@ -197,7 +197,7 @@ def alexIOT():
     #################################################################################################################################
 
     class GuiPart:
-        
+
 
         def __init__(self, master, ):
             pass
@@ -413,7 +413,7 @@ def alexIOT():
     img = PhotoImage(master = canvas, file='alex_ui.png')
     bgimg = Label(ws, image=img)
     bgimg.place(x=0, y=0)
-    
+
 
 
     menu = Menu(ws)
