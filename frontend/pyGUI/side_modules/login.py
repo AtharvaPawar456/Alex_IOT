@@ -395,11 +395,11 @@ def alexIOT():
                 notification.notify(
                     title="Alex-IOT", message=" Connect Device to Internet", timeout=2)
 
-        def channel1(self, x):
-            if(x == "on"):
-                data = urllib.request.urlopen(chann1+str(ch1on))
-            else:
-                data = urllib.request.urlopen(chann1+str(ch1off))
+        # def channel1(self, x):
+        #     if(x == "on"):
+        #         data = urllib.request.urlopen(chann1+str(ch1on))
+        #     else:
+        #         data = urllib.request.urlopen(chann1+str(ch1off))
 
     ##############################################################################################################################
     global is___on

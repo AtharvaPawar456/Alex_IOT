@@ -43,6 +43,18 @@ from urllib import request
 
 # &field1=10&field2=20&field3=30
 
+
+https://api.thingspeak.com/update?api_key=87JIILFZ88HY6E9D&field1=
+&field2=
+&field3=
+&field4=
+&field5=
+&field6=
+&field7=
+&field8=
+
+
+
 # uplink = "https://api.thingspeak.com/update?api_key=42J30P59Q38LHIRY&field1=400&field2=20.54&field3=750" # etc. 
 uplink = "https://api.thingspeak.com/update?api_key=YYN5LAINXD8Y6Y4A&field1=450"
 
